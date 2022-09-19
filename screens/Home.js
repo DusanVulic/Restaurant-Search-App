@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Text, View, StyleSheet, Pressable, Button } from "react-native";
 
 //icon
@@ -8,6 +8,8 @@ import { Ionicons } from "@expo/vector-icons";
 import SearchBar from "../components/SearchBar";
 
 const Home = ({ navigation }) => {
+  const [term, setTerm] = useState();
+
   return (
     <View style={styles.container}>
       {/** navigation to second page */}
@@ -15,13 +17,20 @@ const Home = ({ navigation }) => {
         <Text style={styles.linkStyle}>go to second page</Text>
       </Pressable> */}
 
-      <Text style={styles.headerLight}>Restaraunt</Text>
+      <Text style={styles.headerLight}>Restaurant</Text>
       <View style={styles.logoContainer}>
         <Text style={styles.headerBold}>search app </Text>
         <Ionicons name="restaurant-outline" style={styles.icon} />
       </View>
 
-      <SearchBar />
+      <SearchBar
+        term={term}
+        onChangeTerm={(input) => setTerm(input)}
+        onTermSubmit={() => {
+          console.log("term submitted");
+          setTerm("");
+        }}
+      />
     </View>
   );
 };
@@ -39,6 +48,7 @@ const styles = StyleSheet.create({
   headerLight: {
     fontSize: 25,
     marginLeft: 20,
+    color: "green",
   },
   logoContainer: {
     flexDirection: "row",
