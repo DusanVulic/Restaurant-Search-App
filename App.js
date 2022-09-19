@@ -5,8 +5,9 @@ import { StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 //import stack navigator
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-
+//screens
 import Home from "./screens/Home";
+import SecondScreen from "./screens/SecondScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -17,6 +18,7 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="Second" component={SecondScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </>

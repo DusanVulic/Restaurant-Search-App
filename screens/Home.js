@@ -1,9 +1,12 @@
 import React from "react";
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet, Pressable, Button } from "react-native";
 
-const Home = () => {
+const Home = ({ navigation }) => {
   return (
     <View style={styles.container}>
+      <Pressable onPress={() => navigation.navigate("Second")}>
+        <Text style={styles.linkStyle}>go to second page</Text>
+      </Pressable>
       <Text>home page </Text>
     </View>
   );
@@ -12,6 +15,11 @@ const Home = () => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "white",
+  },
+  linkStyle: {
+    color: "blue",
+    textAlign: "center",
+    marginVertical: 15,
   },
 });
 
