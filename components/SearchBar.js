@@ -20,9 +20,6 @@ const SearchBar = ({ term, onChangeTerm, onTermSubmit }) => {
           onEndEditing={onTermSubmit}
         />
       </View>
-      <View>
-        <Text>{term}</Text>
-      </View>
     </>
   );
 };

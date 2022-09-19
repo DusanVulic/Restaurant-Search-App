@@ -7,8 +7,31 @@ import { Ionicons } from "@expo/vector-icons";
 //somponents
 import SearchBar from "../components/SearchBar";
 
+//importing axios api
+import yelp from "../api/yelp";
+
 const Home = ({ navigation }) => {
   const [term, setTerm] = useState();
+
+  const [results, setResults] = useState([]);
+
+  const [errorMesage, setErrorMessage] = useState("");
+
+  const searchApi = async () => {
+    try {
+      const response = await yelp.get("/search", {
+        params: {
+          limit: 20,
+          term,
+          location: "san jose",
+        },
+      });
+      setResults(response.data.businesses);
+    } catch (error) {
+      setResults([]);
+      setErrorMessage("something went wrong");
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -27,10 +50,14 @@ const Home = ({ navigation }) => {
         term={term}
         onChangeTerm={(input) => setTerm(input)}
         onTermSubmit={() => {
-          console.log("term submitted");
+          searchApi();
           setTerm("");
         }}
       />
+      <View>
+        <Text>we have found {results.length}</Text>
+        {errorMesage ? <Text style={styles.error}>{errorMesage}</Text> : null}
+      </View>
     </View>
   );
 };
@@ -62,6 +89,12 @@ const styles = StyleSheet.create({
   icon: {
     color: "green",
     fontSize: 30,
+  },
+  error: {
+    color: "red",
+    fontSize: 20,
+    marginVertical: 25,
+    left: 50,
   },
 });
 
