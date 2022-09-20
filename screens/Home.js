@@ -17,7 +17,7 @@ const Home = ({ navigation }) => {
 
   const { searchApi, results, errorMesage } = useResults();
 
-  //console.log(results);
+  console.log(results);
 
   //$$ categorization
 
