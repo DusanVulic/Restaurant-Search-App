@@ -16,6 +16,17 @@ const Home = ({ navigation }) => {
   const [term, setTerm] = useState();
 
   const { searchApi, results, errorMesage } = useResults();
+
+  //console.log(results);
+
+  //$$ categorization
+
+  const filterByPrice = (price) => {
+    return results.filter((result) => {
+      return result.price === price;
+    });
+  };
+
   return (
     <View style={styles.container}>
       {/** navigation to second page */}
@@ -41,9 +52,9 @@ const Home = ({ navigation }) => {
         {results && <Text>we have found {results.length}</Text>}
         {errorMesage ? <Text style={styles.error}>{errorMesage}</Text> : null}
       </View>
-      <ResultsList title={"cost effective"} />
-      <ResultsList title={"bit pricier"} />
-      <ResultsList title={"big spender"} />
+      <ResultsList title={"cost effective"} results={filterByPrice("$")} />
+      <ResultsList title={"bit pricier"} results={filterByPrice("$$")} />
+      <ResultsList title={"big spender"} results={filterByPrice("$$$")} />
     </View>
   );
 };
