@@ -9,30 +9,13 @@ import SearchBar from "../components/SearchBar";
 
 //importing axios api
 import yelp from "../api/yelp";
+import useResults from "./../hooks/useResults";
+import ResultsList from "../components/ResultsList";
 
 const Home = ({ navigation }) => {
   const [term, setTerm] = useState();
 
-  const [results, setResults] = useState([]);
-
-  const [errorMesage, setErrorMessage] = useState("");
-
-  const searchApi = async () => {
-    try {
-      const response = await yelp.get("/search", {
-        params: {
-          limit: 20,
-          term,
-          location: "san jose",
-        },
-      });
-      setResults(response.data.businesses);
-    } catch (error) {
-      setResults([]);
-      setErrorMessage("something went wrong");
-    }
-  };
-
+  const { searchApi, results, errorMesage } = useResults();
   return (
     <View style={styles.container}>
       {/** navigation to second page */}
@@ -55,9 +38,12 @@ const Home = ({ navigation }) => {
         }}
       />
       <View>
-        <Text>we have found {results.length}</Text>
+        {results && <Text>we have found {results.length}</Text>}
         {errorMesage ? <Text style={styles.error}>{errorMesage}</Text> : null}
       </View>
+      <ResultsList title={"cost effective"} />
+      <ResultsList title={"bit pricier"} />
+      <ResultsList title={"big spender"} />
     </View>
   );
 };
