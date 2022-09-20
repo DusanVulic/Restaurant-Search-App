@@ -17,6 +17,10 @@ const ResultsList = ({ title, results, loading, navigation }) => {
       </View>
     );
 
+  if (!results.length) {
+    return null;
+  }
+
   if (!loading) {
     return (
       <View>

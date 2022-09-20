@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, ActivityIndicator, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  ActivityIndicator,
+  StyleSheet,
+  FlatList,
+} from "react-native";
 
 import yelp from "../api/yelp";
 
@@ -11,7 +18,7 @@ const SingleResult = ({ route, navigation }) => {
 
   const [result, setResult] = useState(null);
 
-  console.log(result);
+  //console.log(result);
 
   const getResult = async (id) => {
     const response = await yelp.get(`/${id}`);
@@ -28,17 +35,29 @@ const SingleResult = ({ route, navigation }) => {
 
   if (result) {
     return (
-      <View>
+      <View style={styles.container}>
         <Text style={styles.title}> {result.name}</Text>
         <Text style={styles.address}>
           {result.location.address1},{result.location.city}
         </Text>
+        <Text style={styles.phone}>Phone : {result.display_phone}</Text>
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          data={result.photos}
+          keyExtractor={(photo) => photo}
+          renderItem={({ item }) => {
+            return <Image style={styles.image} source={{ uri: item }} />;
+          }}
+        />
       </View>
     );
   }
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   title: {
     color: "green",
     fontSize: 20,
@@ -48,6 +67,19 @@ const styles = StyleSheet.create({
   address: {
     fontSize: 15,
     textAlign: "center",
+    marginBottom: 15,
+  },
+  phone: {
+    color: "green",
+    fontSize: 18,
+    textAlign: "center",
+    marginVertical: 20,
+  },
+  image: {
+    height: 200,
+    width: 300,
+    marginVertical: 10,
+    alignSelf: "center",
   },
 });
 export default SingleResult;
