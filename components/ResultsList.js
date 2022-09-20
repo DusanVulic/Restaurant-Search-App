@@ -9,7 +9,7 @@ import {
 //result detail component
 import ResultDetail from "./ResultDetail";
 
-const ResultsList = ({ title, results, loading }) => {
+const ResultsList = ({ title, results, loading, navigation }) => {
   if (loading)
     return (
       <View style={styles.loadingContainer}>
@@ -28,7 +28,13 @@ const ResultsList = ({ title, results, loading }) => {
           data={results}
           keyExtractor={(result) => result.id}
           renderItem={({ item }) => {
-            return <ResultDetail result={item} loading={loading} />;
+            return (
+              <ResultDetail
+                result={item}
+                loading={loading}
+                navigation={navigation}
+              />
+            );
           }}
         />
       </View>

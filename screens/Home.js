@@ -68,6 +68,7 @@ const Home = ({ navigation }) => {
           title={"cost effective"}
           results={filterByPrice("$")}
           loading={loading}
+          navigation={navigation}
         />
         <ResultsList title={"bit pricier"} results={filterByPrice("$$")} />
         <ResultsList title={"big spender"} results={filterByPrice("$$$")} />

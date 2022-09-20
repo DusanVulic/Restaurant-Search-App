@@ -1,18 +1,26 @@
 import React from "react";
-import { Text, View, Image, StyleSheet, ActivityIndicator } from "react-native";
+import { Text, View, Image, StyleSheet, Pressable } from "react-native";
 
-const ResultDetail = ({ result }) => {
+const ResultDetail = ({ result, navigation }) => {
+  const pressHandler = () => {
+    navigation.navigate("Result", {
+      id: result.id,
+    });
+  };
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>{result.name}</Text>
-      <Image source={{ uri: result.image_url }} style={styles.image} />
+    <Pressable onPress={pressHandler}>
+      <View style={styles.container}>
+        <Text style={styles.title}>{result.name}</Text>
+        <Image source={{ uri: result.image_url }} style={styles.image} />
 
-      <View>
-        <Text style={styles.rating}>
-          {result.rating} stars {result.review_count} Rewiews
-        </Text>
+        <View>
+          <Text style={styles.rating}>
+            {result.rating} stars {result.review_count} Rewiews
+          </Text>
+        </View>
       </View>
-    </View>
+    </Pressable>
   );
 };
 
