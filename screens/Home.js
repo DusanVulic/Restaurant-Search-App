@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { Text, View, StyleSheet, Pressable, Button } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  Pressable,
+  Button,
+  ScrollView,
+} from "react-native";
 
 //icon
 import { Ionicons } from "@expo/vector-icons";
@@ -15,9 +22,9 @@ import ResultsList from "../components/ResultsList";
 const Home = ({ navigation }) => {
   const [term, setTerm] = useState();
 
-  const { searchApi, results, errorMesage } = useResults();
+  const { searchApi, results, loading, errorMesage } = useResults();
 
-  console.log(results);
+  //console.log(results);
 
   //$$ categorization
 
@@ -44,17 +51,27 @@ const Home = ({ navigation }) => {
         term={term}
         onChangeTerm={(input) => setTerm(input)}
         onTermSubmit={() => {
-          searchApi();
+          searchApi(term);
           setTerm("");
         }}
       />
       <View>
-        {results && <Text>we have found {results.length}</Text>}
+        {results && (
+          <Text style={styles.resultText}>
+            we have found {results.length} results:{" "}
+          </Text>
+        )}
         {errorMesage ? <Text style={styles.error}>{errorMesage}</Text> : null}
       </View>
-      <ResultsList title={"cost effective"} results={filterByPrice("$")} />
-      <ResultsList title={"bit pricier"} results={filterByPrice("$$")} />
-      <ResultsList title={"big spender"} results={filterByPrice("$$$")} />
+      <ScrollView>
+        <ResultsList
+          title={"cost effective"}
+          results={filterByPrice("$")}
+          loading={loading}
+        />
+        <ResultsList title={"bit pricier"} results={filterByPrice("$$")} />
+        <ResultsList title={"big spender"} results={filterByPrice("$$$")} />
+      </ScrollView>
     </View>
   );
 };
@@ -62,6 +79,7 @@ const Home = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "white",
+    flex: 1,
   },
   linkStyle: {
     fontSize: 20,
@@ -86,6 +104,12 @@ const styles = StyleSheet.create({
   icon: {
     color: "green",
     fontSize: 30,
+  },
+  resultText: {
+    color: "green",
+    fontSize: 16,
+    marginVertical: 10,
+    marginLeft: 15,
   },
   error: {
     color: "red",

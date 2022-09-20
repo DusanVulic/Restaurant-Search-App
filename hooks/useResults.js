@@ -4,18 +4,20 @@ import yelp from "../api/yelp";
 
 export default useResults = () => {
     const [results, setResults] = useState([]);
-
+    const [loading, setLoading] = useState(null);
     const [errorMessage, setErrorMessage] = useState("");
 
     const searchApi = async(searchTerm) => {
+        setLoading(true);
         try {
             const response = await yelp.get("/search", {
                 params: {
-                    limit: 50,
+                    limit: 20,
                     term: searchTerm,
                     location: "san jose",
                 },
             });
+            setLoading(false);
             setResults(response.data.businesses);
         } catch (error) {
             setResults([]);
@@ -27,5 +29,5 @@ export default useResults = () => {
         searchApi("pasta");
     }, []);
 
-    return { searchApi, results, errorMessage };
+    return { searchApi, results, loading, errorMessage };
 };
