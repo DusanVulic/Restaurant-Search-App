@@ -15,7 +15,7 @@ import { Ionicons } from "@expo/vector-icons";
 import SearchBar from "../components/SearchBar";
 
 //importing axios api
-import yelp from "../api/yelp";
+
 import useResults from "./../hooks/useResults";
 import ResultsList from "../components/ResultsList";
 
@@ -70,8 +70,18 @@ const Home = ({ navigation }) => {
           loading={loading}
           navigation={navigation}
         />
-        <ResultsList title={"bit pricier"} results={filterByPrice("$$")} />
-        <ResultsList title={"big spender"} results={filterByPrice("$$$")} />
+        <ResultsList
+          title={"bit pricier"}
+          results={filterByPrice("$$")}
+          loading={loading}
+          navigation={navigation}
+        />
+        <ResultsList
+          title={"big spender"}
+          results={filterByPrice("$$$")}
+          loading={loading}
+          navigation={navigation}
+        />
       </ScrollView>
     </View>
   );
